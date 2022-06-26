@@ -1,0 +1,46 @@
+#!/bin/bash
+#
+# Copyright (c) 2019-2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
+#
+# https://github.com/P3TERX/Actions-OpenWrt
+# https://github.com/1791356563/openwrt-autobuild
+# File name: diy-part1.sh
+# Description: OpenWrt DIY script part 1 (Before Update feeds)
+#
+
+# Uncomment a feed source
+#sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
+
+# Modify the default LAN port IP
+#sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
+
+sed -i 's/192.168.1.1/192.168.8.1/g' package/base-files/files/bin/config_generate
+
+# Change the default root password
+#sed -i 's/root::0:0:99999:7:::/ YourEncryptedPassword /g' package/base-files/files/etc/shadow
+#sed -i 's/root:$1$V4UetPzk$CYXluq4wUazHjmCDBCqXF.:0:0:99999:7:::/ YourEncryptedPassword /g' package/lean/default-settings/files/zzz-default-settings
+
+
+# Modify the Compiler author information
+#sed -i "751i \\\t\t<tr><td width=\"33%\"><%:Compiler author%></td><td>nili\tQQ:1791356563</td></tr>" package/lean/autocore/files/x86/index.htm
+#sed -i "742i \\\t\t<tr><td width=\"33%\"><%:Compiler author%></td><td>nili\tQQ:1791356563</td></tr>" package/lean/autocore/files/arm/index.htm
+
+sed -i "751i \\\t\t<tr><td width=\"33%\"><%:Compiler author%></td><td>nili\tQQ:1791356563</td></tr>" package/lean/autocore/files/x86/index.htm
+sed -i "742i \\\t\t<tr><td width=\"33%\"><%:Compiler author%></td><td>nili\tQQ:1791356563</td></tr>" package/lean/autocore/files/arm/index.htm
+
+# Modify the login page banner information
+#sed -i '1,9d' package/base-files/files/etc/banner
+#sed -i "1i \\\nNNNNNNNN        NNNNNNNNIIIIIIIIIILLLLLLLLLLL             IIIIIIIIII\nN:::::::N       N::::::NI::::::::IL:::::::::L             I::::::::I\nN::::::::N      N::::::NI::::::::IL:::::::::L             I::::::::I\nN:::::::::N     N::::::NII::::::IILL:::::::LL             II::::::II\nN::::::::::N    N::::::N  I::::I    L:::::L                 I::::I  \nN:::::::::::N   N::::::N  I::::I    L:::::L                 I::::I  \nN:::::::N::::N  N::::::N  I::::I    L:::::L                 I::::I  \nN::::::N N::::N N::::::N  I::::I    L:::::L                 I::::I  \nN::::::N  N::::N:::::::N  I::::I    L:::::L                 I::::I  \nN::::::N   N:::::::::::N  I::::I    L:::::L                 I::::I  \nN::::::N    N::::::::::N  I::::I    L:::::L                 I::::I  \nN::::::N     N:::::::::N  I::::I    L:::::L         LLLLLL  I::::I  \nN::::::N      N::::::::NII::::::IILL:::::::LLLLLLLLL:::::LII::::::II\nN::::::N       N:::::::NI::::::::IL::::::::::::::::::::::LI::::::::I\nN::::::N        N::::::NI::::::::IL::::::::::::::::::::::LI::::::::I\nNNNNNNNN         NNNNNNNIIIIIIIIIILLLLLLLLLLLLLLLLLLLLLLLLIIIIIIIIII\n\n%D %V, %C, Power By Nili, QQ:1791356563\n" package/base-files/files/etc/banner
+
+sed -i '1,9d' package/base-files/files/etc/banner
+sed -i "1i \\\nNNNNNNNN        NNNNNNNNIIIIIIIIIILLLLLLLLLLL             IIIIIIIIII\nN:::::::N       N::::::NI::::::::IL:::::::::L             I::::::::I\nN::::::::N      N::::::NI::::::::IL:::::::::L             I::::::::I\nN:::::::::N     N::::::NII::::::IILL:::::::LL             II::::::II\nN::::::::::N    N::::::N  I::::I    L:::::L                 I::::I  \nN:::::::::::N   N::::::N  I::::I    L:::::L                 I::::I  \nN:::::::N::::N  N::::::N  I::::I    L:::::L                 I::::I  \nN::::::N N::::N N::::::N  I::::I    L:::::L                 I::::I  \nN::::::N  N::::N:::::::N  I::::I    L:::::L                 I::::I  \nN::::::N   N:::::::::::N  I::::I    L:::::L                 I::::I  \nN::::::N    N::::::::::N  I::::I    L:::::L                 I::::I  \nN::::::N     N:::::::::N  I::::I    L:::::L         LLLLLL  I::::I  \nN::::::N      N::::::::NII::::::IILL:::::::LLLLLLLLL:::::LII::::::II\nN::::::N       N:::::::NI::::::::IL::::::::::::::::::::::LI::::::::I\nN::::::N        N::::::NI::::::::IL::::::::::::::::::::::LI::::::::I\nNNNNNNNN         NNNNNNNIIIIIIIIIILLLLLLLLLLLLLLLLLLLLLLLLIIIIIIIIII\n\n%D %V, %C, Power By Nili, QQ:1791356563\n" package/base-files/files/etc/banner
+
+# Add third-party plugin libraries
+#echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
+#echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
+#sed -i '5i src-git kenzo https://github.com/kenzok8/openwrt-packages\nsrc-git small https://github.com/kenzok8/small' feeds.conf.default
+
+sed -i '5i src-git kenzo https://github.com/kenzok8/small-package\nsrc-git small https://github.com/kenzok8/small' feeds.conf.default
