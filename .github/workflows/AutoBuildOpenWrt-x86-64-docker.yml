@@ -174,7 +174,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_ANONFILE == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer anon --no-progress ${FIRMWARE} 2>&1 | tee anonfile.log
+        ./transfer anon --no-progress openwrt-x86-64-generic-squashfs-combined-efi.img.gz 2>&1 | tee anonfile.log
         echo "::warning file=anonfile.com::$(cat anonfile.log | grep https)"
         echo "::set-output name=url::$(cat anonfile.log | grep https | cut -f3 -d" ")"
         
@@ -183,7 +183,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_AIRPORTAL == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer arp -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee airportal.log
+        ./transfer arp -s -p 64 --no-progress openwrt-x86-64-generic-squashfs-combined-efi.img.gz 2>&1 | tee airportal.log
         echo "::warning file=airportal.cn::$(cat airportal.log | grep https)"
         echo "::set-output name=url::$(cat airportal.log | grep https | cut -f3 -d" ")"
 
@@ -192,7 +192,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_TRANSFER == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer trs --no-progress ${FIRMWARE} 2>&1 | tee transfer.log
+        ./transfer trs --no-progress openwrt-x86-64-generic-squashfs-combined-efi.img.gz 2>&1 | tee transfer.log
         echo "::warning file=transfer.sh::$(cat transfer.log | grep https)"
         echo "::set-output name=url::$(cat transfer.log | grep https | cut -f3 -d" ")"
 
@@ -201,7 +201,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_DOWNLOAD == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer gg --no-progress ${FIRMWARE} 2>&1 | tee download.log
+        ./transfer gg --no-progress openwrt-x86-64-generic-squashfs-combined-efi.img.gz 2>&1 | tee download.log
         echo "::warning file=download.gg::$(cat download.log | grep https)"
         echo "::set-output name=url::$(cat download.log | grep https | cut -f3 -d" ")"
 
@@ -210,7 +210,7 @@ jobs:
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_NULLL == 'true' && !cancelled()
       run: |
         curl -fsSL git.io/file-transfer | sh
-        ./transfer null --no-progress ${FIRMWARE} 2>&1 | tee nulll.log
+        ./transfer null --no-progress openwrt-x86-64-generic-squashfs-combined-efi.img.gz 2>&1 | tee nulll.log
         echo "::warning file=0x0.st::$(cat nulll.log | grep https)"
         echo "::set-output name=url::$(cat nulll.log | grep https | cut -f3 -d" ")"
 
