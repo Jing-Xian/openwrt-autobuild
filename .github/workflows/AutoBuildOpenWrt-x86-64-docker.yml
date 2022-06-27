@@ -41,6 +41,8 @@ env:
   UPLOAD_WETRANSFER: true
   UPLOAD_GOFILE: true
   UPLOAD_RELEASE: false
+  REMOVE_OLD_RELEASE: true
+  GENERATE_RELEASE_TAG: true
   TZ: Asia/Shanghai
 
 jobs:
@@ -94,7 +96,7 @@ jobs:
         $GITHUB_WORKSPACE/$DIY_P2_SH
 
     - name: SSH connection to Actions
-      uses: mxschmitt/action-tmate@v3
+      uses: P3TERX/ssh2actions@v1.0.0
       if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -176,7 +178,7 @@ jobs:
 
     - name: Generate release tag
       id: tag
-      if: env.UPLOAD_WETRANSFER == 'true' && !cancelled()
+      if: env.GENERATE_RELEASE_TAG == 'true' && !cancelled()
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
@@ -203,7 +205,7 @@ jobs:
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@v0.1.0
-      if: env.UPLOAD_RELEASE == 'true' && !cancelled()
+      if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
       with:
         keep_latest: 3
         delete_tags: true
