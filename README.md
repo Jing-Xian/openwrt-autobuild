@@ -2,7 +2,14 @@
 
 openwrt自动每日云编译
 
-感谢@https://github.com/P3TERX/Actions-OpenWrt 提供的源码
+# 感谢
+@https://github.com/coolsnowwolf/lede
+@https://github.com/P3TERX/Actions-OpenWrt
+@https://github.com/Mikubill/transfer
+@https://github.com/kenzok8/small-package
+@https://github.com/kenzok8/small
+
+等提供的源码
 
 ### 默认用户名 ROOT 默认密码 password
 
