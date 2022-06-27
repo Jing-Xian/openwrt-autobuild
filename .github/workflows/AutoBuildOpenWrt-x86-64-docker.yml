@@ -11,7 +11,7 @@
 # Description: Build OpenWrt using GitHub Actions
 #
 
-name: AutoBuildOpenWrt-x86-64-docker
+name: AutoBuildOpenwrt-x86-64-docker
 
 on:
   schedule:
@@ -26,8 +26,6 @@ on:
         required: false
         default: 'false'
 
-# 文叔叔禁用了GitHub Action的IP，故无法上传
-
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
@@ -37,12 +35,16 @@ env:
   DIY_P2_SH: x86-64-docker-diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
-  UPLOAD_WENSHUSHU: false
   UPLOAD_WETRANSFER: true
   UPLOAD_GOFILE: true
-  UPLOAD_RELEASE: false
+  UPLOAD_ANONFILE: true
+  UPLOAD_AIRPORTAL: true
+  UPLOAD_TRANSFER: true
+  UPLOAD_DOWNLOAD: true
+  UPLOAD_NULLL: true
   REMOVE_OLD_RELEASE: true
   GENERATE_RELEASE_TAG: true
+  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
 jobs:
@@ -149,15 +151,6 @@ jobs:
         name: OpenWrt_firmware${{ env.DEVICE_NAME }}${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE }}
 
-    - name: Upload firmware to wenshushu
-      id: wenshushu
-      if: steps.organize.outputs.status == 'success' && env.UPLOAD_WENSHUSHU == 'true' && !cancelled()
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer wss -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee wenshushu.log
-        echo "::warning file=wenshushu.cn::$(cat wenshushu.log | grep https)"
-        echo "::set-output name=url::$(cat wenshushu.log | grep https | cut -f3 -d" ")"
-
     - name: Upload firmware to WeTransfer
       id: wetransfer
       if: steps.organize.outputs.status == 'success' && env.UPLOAD_WETRANSFER == 'true' && !cancelled()
@@ -176,15 +169,64 @@ jobs:
         echo "::warning file=gofile.io::$(cat gofile.log | grep https)"
         echo "::set-output name=url::$(cat gofile.log | grep https | cut -f3 -d" ")"
 
+    - name: Upload firmware to anonfile
+      id: anonfile
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_ANONFILE == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer anon --no-progress ${FIRMWARE} 2>&1 | tee anonfile.log
+        echo "::warning file=anonfile.com::$(cat anonfile.log | grep https)"
+        echo "::set-output name=url::$(cat anonfile.log | grep https | cut -f3 -d" ")"
+        
+    - name: Upload firmware to airportal
+      id: airportal
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_AIRPORTAL == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer arp -s -p 64 --no-progress ${FIRMWARE} 2>&1 | tee airportal.log
+        echo "::warning file=airportal.cn::$(cat airportal.log | grep https)"
+        echo "::set-output name=url::$(cat airportal.log | grep https | cut -f3 -d" ")"
+
+    - name: Upload firmware to transfer
+      id: transfer
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_TRANSFER == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer trs --no-progress ${FIRMWARE} 2>&1 | tee transfer.log
+        echo "::warning file=transfer.sh::$(cat transfer.log | grep https)"
+        echo "::set-output name=url::$(cat transfer.log | grep https | cut -f3 -d" ")"
+
+    - name: Upload firmware to download
+      id: download
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_DOWNLOAD == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer gg --no-progress ${FIRMWARE} 2>&1 | tee download.log
+        echo "::warning file=download.gg::$(cat download.log | grep https)"
+        echo "::set-output name=url::$(cat download.log | grep https | cut -f3 -d" ")"
+
+    - name: Upload firmware to Nulll
+      id: nulll
+      if: steps.organize.outputs.status == 'success' && env.UPLOAD_NULLL == 'true' && !cancelled()
+      run: |
+        curl -fsSL git.io/file-transfer | sh
+        ./transfer null --no-progress ${FIRMWARE} 2>&1 | tee nulll.log
+        echo "::warning file=0x0.st::$(cat nulll.log | grep https)"
+        echo "::set-output name=url::$(cat nulll.log | grep https | cut -f3 -d" ")"
+
     - name: Generate release tag
       id: tag
       if: env.GENERATE_RELEASE_TAG == 'true' && !cancelled()
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
-        [ $UPLOAD_WENSHUSHU = true ] && echo "🔗 [文叔叔](${{ steps.wenshushu.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
         [ $UPLOAD_GOFILE = true ] && echo "🔗 [Gofile](${{ steps.gofile.outputs.url }})" >> release.txt
+        [ $UPLOAD_ANONFILE = true ] && echo "🔗 [Anonfile](${{ steps.anonfile.outputs.url }})" >> release.txt
+        [ $UPLOAD_AIRPORTAL = true ] && echo "🔗 [Airportal](${{ steps.airportal.outputs.url }})" >> release.txt
+        [ $UPLOAD_TRANSFER = true ] && echo "🔗 [Transfer](${{ steps.transfer.outputs.url }})" >> release.txt
+        [ $UPLOAD_DOWNLOAD = true ] && echo "🔗 [Download](${{ steps.download.outputs.url }})" >> release.txt
+        [ $UPLOAD_NULLL = true ] && echo "🔗 [Nulll](${{ steps.nulll.outputs.url }})" >> release.txt
         echo "::set-output name=status::success"
         
     - name: Upload firmware to release
