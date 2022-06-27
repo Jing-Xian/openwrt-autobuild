@@ -26,6 +26,8 @@ on:
         required: false
         default: 'false'
 
+# 文叔叔禁用了GitHub Action的IP，故无法上传
+
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   REPO_BRANCH: master
@@ -35,7 +37,7 @@ env:
   DIY_P2_SH: x86-64-docker-diy-part2.sh
   UPLOAD_BIN_DIR: false
   UPLOAD_FIRMWARE: true
-  UPLOAD_WENSHUSHU: true
+  UPLOAD_WENSHUSHU: false
   UPLOAD_WETRANSFER: true
   UPLOAD_GOFILE: true
   UPLOAD_RELEASE: false
@@ -178,9 +180,9 @@ jobs:
       run: |
         echo "::set-output name=release_tag::$(date +"%Y.%m.%d-%H%M")"
         touch release.txt
-        [ $UPLOAD_WENSHUSHU = true ] && echo "🔗 [wenshushu](${{ steps.wenshushu.outputs.url }})" >> release.txt
+        [ $UPLOAD_WENSHUSHU = true ] && echo "🔗 [文叔叔](${{ steps.wenshushu.outputs.url }})" >> release.txt
         [ $UPLOAD_WETRANSFER = true ] && echo "🔗 [WeTransfer](${{ steps.wetransfer.outputs.url }})" >> release.txt
-        [ $UPLOAD_GOFILE = true ] && echo "🔗 [gofile](${{ steps.gofile.outputs.url }})" >> release.txt
+        [ $UPLOAD_GOFILE = true ] && echo "🔗 [Gofile](${{ steps.gofile.outputs.url }})" >> release.txt
         echo "::set-output name=status::success"
         
     - name: Upload firmware to release
