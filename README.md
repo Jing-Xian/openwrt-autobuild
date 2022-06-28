@@ -11,7 +11,7 @@ openwrt自动每日云编译
 
 等提供的源码
 
-### 默认用户名 ROOT 默认密码 password
+### 默认用户名 ROOT 默认密码 password 默认lan口ip 192.168.8.1
 
 ### 自动云编译步骤
 
