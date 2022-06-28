@@ -41,7 +41,6 @@ env:
   UPLOAD_TRANSFER: true
   REMOVE_OLD_RELEASE: true
   GENERATE_RELEASE_TAG: true
-  UPLOAD_RELEASE: false
   TZ: Asia/Shanghai
 
 jobs:
