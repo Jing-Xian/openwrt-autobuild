@@ -15,7 +15,7 @@ name: AutoBuildOpenwrt-x86-64-docker
 
 on:
   schedule:
-    - cron: "21 19 * * *"
+    - cron: "21 19 * * 1"
   watch:
     types: started
   repository_dispatch:
@@ -206,7 +206,7 @@ jobs:
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
-        files: ${{ env.FIRMWARE }}/*
+#        files: ${{ env.FIRMWARE }}/*
 
     - name: Delete workflow runs
       uses: GitRML/delete-workflow-runs@main
@@ -218,7 +218,7 @@ jobs:
       uses: dev-drprasad/delete-older-releases@v0.1.0
       if: env.REMOVE_OLD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 3
+        keep_latest: 10
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
