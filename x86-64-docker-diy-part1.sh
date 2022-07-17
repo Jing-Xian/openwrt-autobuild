@@ -37,4 +37,4 @@ sed -i "1i \\\nNNNNNNNN        NNNNNNNNIIIIIIIIIILLLLLLLLLLL             IIIIIII
 #echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 #sed -i '5i src-git kenzo https://github.com/kenzok8/openwrt-packages\nsrc-git small https://github.com/kenzok8/small' feeds.conf.default
 
-sed -i '5i src-git kenzo https://github.com/kenzok8/openwrt-packages\nsrc-git small https://github.com/kenzok8/small\nsrc-git nas https://github.com/linkease/nas-packages.git;master\nsrc-git nas_luci https://github.com/linkease/nas-packages-luci.git;main' feeds.conf.default
+sed -i '5i src-git kenzo https://github.com/kenzok8/openwrt-packages\nsrc-git small https://github.com/kenzok8/small' feeds.conf.default
