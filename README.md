@@ -1,6 +1,6 @@
 # openwrt-autobuild
 
-openwrt自动每周一云编译
+openwrt自动每周一/周五云编译
 
 # 感谢
 @https://github.com/coolsnowwolf/lede
@@ -15,5 +15,5 @@ openwrt自动每周一云编译
 
 ### 自动云编译步骤
 
-每周一凌晨3点21分自动编译
+每周一/周五凌晨3点21分自动编译
 或fork仓库，点击右上角star，标记为starred后自动开始编译，后续需取消，然后再次点击star开始编译
